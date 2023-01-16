@@ -70,9 +70,9 @@ class LogEvent(object):
     # -------------------------------------------------------------------------
     def dict(self) -> dict:
         return {
-            'message': self._message,
-            'level': self._level.name,
-            'utc_datetime': self._utc_datetime
+            "message": self._message,
+            "level": self._level.name,
+            "utc_datetime": self._utc_datetime,
         }
 
     # -------------------------------------------------------------------------
@@ -82,7 +82,7 @@ class LogEvent(object):
         return "[{level}: {utc_datetime}]: {message}".format(
             level=self._level.name,
             utc_datetime=str(self._utc_datetime),
-            message=self._message
+            message=self._message,
         )
 
 
@@ -90,12 +90,8 @@ class LogEvent(object):
 # CLASS SIMPLE LOGGER
 # -----------------------------------------------------------------------------
 class StandardOutputLogger(AbstractLogger):
-
     def __init__(self):
-        logging.getLogger()\
-            .setLevel(
-            logging.DEBUG
-        )
+        logging.getLogger().setLevel(logging.DEBUG)
 
     # -------------------------------------------------------------------------
     # METHOD DEBUG

@@ -19,10 +19,7 @@ class SecurityCenterRepository(BaseModel):
 # =========================================================
 class HeimdallModel(BaseModel):
 
-    id: str = Field(
-        None,
-        title="Unique identifier"
-    )
+    id: str = Field(None, title="Unique identifier")
 
     datacenter: Optional[str]
     repository: Optional[SecurityCenterRepository]
@@ -47,26 +44,26 @@ class HeimdallModel(BaseModel):
     @property
     def model_fields(self) -> List[str]:
         return [
-            'id',
-            'datacenter',
-            'repository',
-            'asset_group',
-            'jira_id',
-            'ownership',
-            'status',
-            'priority',
-            'last_seen',
-            'solution',
-            'plugin_output',
-            'plugin_info',
-            'plugin_name',
-            'plugin_id',
-            'description',
-            'dns_name',
-            'protocol',
-            'port',
-            'ip',
-            'severity'
+            "id",
+            "datacenter",
+            "repository",
+            "asset_group",
+            "jira_id",
+            "ownership",
+            "status",
+            "priority",
+            "last_seen",
+            "solution",
+            "plugin_output",
+            "plugin_info",
+            "plugin_name",
+            "plugin_id",
+            "description",
+            "dns_name",
+            "protocol",
+            "port",
+            "ip",
+            "severity",
         ]
 
 
@@ -83,10 +80,10 @@ class Vulnerability(HeimdallModel):
     @property
     def model_fields(self) -> List[str]:
         base_fields = super().model_fields
-        base_fields.append('cve')
-        base_fields.append('exploit_available')
-        base_fields.append('exploit_frameworks')
-        base_fields.append('see_also')
+        base_fields.append("cve")
+        base_fields.append("exploit_available")
+        base_fields.append("exploit_frameworks")
+        base_fields.append("see_also")
         return base_fields
 
 
@@ -95,5 +92,3 @@ class Vulnerability(HeimdallModel):
 # =========================================================
 class Benchmark(HeimdallModel):
     pass
-
-
