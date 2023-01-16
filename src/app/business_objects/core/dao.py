@@ -115,11 +115,7 @@ def inject_mongodb_error_handling(func):
 class EntityRepository:
     __metaclass__ = ABCMeta
 
-    def __init__(
-            self,
-            collection_name: str,
-            context: ServerContext = get_context()
-    ):
+    def __init__(self, collection_name: str, context: ServerContext = get_context()):
         """
         EntityRepository is not designed to be instantiated
         directly because it is an abstract class. This class
@@ -208,31 +204,20 @@ class EntityRepository:
     # -----------------------------------------------------
     @inject_mongodb_error_handling
     def update_one(self, issue_id: str, new_values: dict):
-        return self.entities.update_one(
-            {"id": issue_id}, {"$set": new_values}
-        )
+        return self.entities.update_one({"id": issue_id}, {"$set": new_values})
 
     # -----------------------------------------------------
     # METHOD UPDATE MANY
     # -----------------------------------------------------
     @inject_mongodb_error_handling
-    def update_many(
-            self,
-            filter_query: dict,
-            new_values: dict
-    ):
-        return self.entities.update_many(
-            filter_query,
-            {"$set": new_values}
-        )
+    def update_many(self, filter_query: dict, new_values: dict):
+        return self.entities.update_many(filter_query, {"$set": new_values})
 
     # -----------------------------------------------------
     # METHOD CREATE
     # -----------------------------------------------------
     def create(self, values: dict):
-        return self.entities\
-            .insert_one(values)\
-            .inserted_id
+        return self.entities.insert_one(values).inserted_id
 
     # -----------------------------------------------------
     # METHOD GET INDEX FIELDS
