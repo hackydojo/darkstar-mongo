@@ -12,17 +12,13 @@ class Benchmarks(EntityRepository):
     # CONSTRUCTOR
     # -----------------------------------------------------
     def __init__(self):
-        super().__init__(
-            collection_name='benchmarks'
-        )
+        super().__init__(collection_name="benchmarks")
 
     # -----------------------------------------------------
     # GET INDEX FIELDS
     # -----------------------------------------------------
     def get_index_fields(self) -> List[str]:
-        return [
-            'id'
-        ]
+        return ["id"]
 
 
 # =========================================================

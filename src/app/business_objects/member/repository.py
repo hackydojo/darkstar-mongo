@@ -11,18 +11,13 @@ class Members(EntityRepository):
     # CONSTRUCTOR
     # -----------------------------------------------------
     def __init__(self):
-        super().__init__(
-            collection_name='users'
-        )
+        super().__init__(collection_name="users")
 
     # -----------------------------------------------------
     # GET INDEX FIELDS
     # -----------------------------------------------------
     def get_index_fields(self) -> List[str]:
-        return [
-            'id',
-            'email'
-        ]
+        return ["id", "email"]
 
 
 # =========================================================

@@ -10,24 +10,16 @@ class EntityAdapter(object):
     # -----------------------------------------------------
     # CONSTRUCTOR
     # -----------------------------------------------------
-    def __init__(
-            self,
-            destination_model: HeimdallModel,
-            raw_data: Dict
-    ):
+    def __init__(self, destination_model: HeimdallModel, raw_data: Dict):
         self.result = self.extract_entity(
-            destination_model=destination_model,
-            raw_data=raw_data
+            destination_model=destination_model, raw_data=raw_data
         )
 
     # -----------------------------------------------------
     # EXTRACT ENTITY
     # -----------------------------------------------------
     @staticmethod
-    def extract_entity(
-            destination_model: HeimdallModel,
-            raw_data: dict
-    ):
+    def extract_entity(destination_model: HeimdallModel, raw_data: dict):
         result = {}
         for key in destination_model.model_fields:
             if key in raw_data.keys():

@@ -11,17 +11,13 @@ class SecurityCenterRepositories(EntityRepository):
     # CONSTRUCTOR
     # -----------------------------------------------------
     def __init__(self):
-        super().__init__(
-            collection_name='sc_repositories'
-        )
+        super().__init__(collection_name="sc_repositories")
 
     # -----------------------------------------------------
     # GET INDEX FIELDS
     # -----------------------------------------------------
     def get_index_fields(self) -> List[str]:
-        return [
-            'repository_id'
-        ]
+        return ["repository_id"]
 
 
 # =========================================================
