@@ -33,13 +33,14 @@ app.add_middleware(
 )
 
 # This is required to temporary save code and state in the session
-# during authorization with w3id
+# during authorization
 app.add_middleware(
     RedisSessionMiddleware,
     signing_key=get_context().middleware_key,
     cookie_name='darkstar',
     redis=get_context().redis_connection
 )
+
 
 # Members Router Inclusion
 app.include_router(members_router, prefix=f"/api/{get_context().api_version}")
