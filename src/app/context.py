@@ -1,10 +1,7 @@
 from confite import Confite
 from dotenv import load_dotenv
 from pymongo import MongoClient, database
-from app.logging import (
-    AbstractLogger,
-    StandardOutputLogger
-)
+from app.logging import AbstractLogger, StandardOutputLogger
 from urllib3.exceptions import InsecureRequestWarning
 from urllib3 import disable_warnings
 import logging
@@ -36,20 +33,20 @@ class ServerContext(Confite):
     # BUILD CONNECTION STRING
     # -----------------------------------------------------
     def build_connection_string(self):
-        user: str = self.as_str('MONGO_USER')
-        pwd: str = self.as_str('MONGO_PASSWORD')
-        host: str = self.as_str('MONGO_SERVER')
-        db: str = self.as_str('MONGO_DB')
-        port: int = self.as_int('MONGO_PORT')
-        if self.as_int('MONGO_SRV') == 1:
-            return f'mongodb+srv://{user}:{pwd}@{host}/{db}'
-        return f'mongodb://{user}:{pwd}@{host}:{port}/{db}'
+        user: str = self.as_str("MONGO_USER")
+        pwd: str = self.as_str("MONGO_PASSWORD")
+        host: str = self.as_str("MONGO_SERVER")
+        db: str = self.as_str("MONGO_DB")
+        port: int = self.as_int("MONGO_PORT")
+        if self.as_int("MONGO_SRV") == 1:
+            return f"mongodb+srv://{user}:{pwd}@{host}/{db}"
+        return f"mongodb://{user}:{pwd}@{host}:{port}/{db}"
 
     # -----------------------------------------------------
     # TLS_REQUIRED
     # -----------------------------------------------------
     def tls_required(self) -> bool:
-        return self.as_int('MONGO_TLS_CONNECTION') == 1
+        return self.as_int("MONGO_TLS_CONNECTION") == 1
 
     # -----------------------------------------------------
     # DATABASE
@@ -67,27 +64,29 @@ class ServerContext(Confite):
     def database_without_tls(self) -> database:
         print("Connecting without database encryption...")
         return MongoClient(
-            self.build_connection_string() +
-            f'?authSource=admin{self.replica_set}'
-        )[self.as_str('MONGO_DB')]
+            self.build_connection_string() + f"?authSource=admin{self.replica_set}"
+        )[self.as_str("MONGO_DB")]
 
     # -----------------------------------------------------
     # DATABASE WITH TLS
     # -----------------------------------------------------
     @property
     def database_with_tls(self) -> database:
-        print(self.build_connection_string() + f'?authSource=admin{self.replica_set}&tls=true')
+        print(
+            self.build_connection_string()
+            + f"?authSource=admin{self.replica_set}&tls=true"
+        )
         return MongoClient(
-            self.build_connection_string() +
-            f'?authSource=admin{self.replica_set}&tls=true'
-        )[self.as_str('MONGO_DB')]
+            self.build_connection_string()
+            + f"?authSource=admin{self.replica_set}&tls=true"
+        )[self.as_str("MONGO_DB")]
 
     # -----------------------------------------------------
     # PROPERTY IS_CLUSTER
     # -----------------------------------------------------
     @property
     def is_cluster(self) -> bool:
-        return self.as_int('MONGO_CLUSTER') == 1
+        return self.as_int("MONGO_CLUSTER") == 1
 
     # -----------------------------------------------------
     # PROPERTY REPLICA SET
@@ -111,28 +110,28 @@ class ServerContext(Confite):
     # -----------------------------------------------------
     @property
     def middleware_key(self) -> str:
-        return self.as_str('SESSION_MIDDLEWARE_KEY')
+        return self.as_str("SESSION_MIDDLEWARE_KEY")
 
     # -----------------------------------------------------
     # PROPERTY API_VERSION
     # -----------------------------------------------------
     @property
     def api_version(self) -> str:
-        return self.as_str('API_VERSION')
+        return self.as_str("API_VERSION")
 
     # -----------------------------------------------------
     # PROPERTY QUERY LIMIT
     # -----------------------------------------------------
     @property
     def query_limit(self) -> int:
-        return self.as_int('QUERY_LIMIT')
+        return self.as_int("QUERY_LIMIT")
 
     # -----------------------------------------------------
     # PROPERTY LOG LEVEL
     # -----------------------------------------------------
     @property
     def log_level(self):
-        match self.as_str('LOG_LEVEL').upper():
+        match self.as_str("LOG_LEVEL").upper():
             case "DEBUG":
                 return logging.DEBUG
             case "ERROR":
@@ -152,22 +151,21 @@ def get_context() -> ServerContext:
     load_dotenv()
     return ServerContext(
         [
-            'MONGO_USER',
-            'MONGO_PASSWORD',
-            'MONGO_SERVER',
-            'MONGO_DB',
-            'MONGO_PORT',
-            'MONGO_TLS_CONNECTION',
-            'MONGO_REPLICA_SET',
-            'MONGO_CLUSTER',
-            'MONGO_SRV',
+            "MONGO_USER",
+            "MONGO_PASSWORD",
+            "MONGO_SERVER",
+            "MONGO_DB",
+            "MONGO_PORT",
+            "MONGO_TLS_CONNECTION",
+            "MONGO_REPLICA_SET",
+            "MONGO_CLUSTER",
+            "MONGO_SRV",
             # 'OIDC_DISCOVERY_ENDPOINT',
             # 'OIDC_CLIENT_ID',
             # 'OIDC_CLIENT_SECRET',
-            'SESSION_MIDDLEWARE_KEY',
-            'API_VERSION',
-            'QUERY_LIMIT',
-            'LOG_LEVEL'
-
+            "SESSION_MIDDLEWARE_KEY",
+            "API_VERSION",
+            "QUERY_LIMIT",
+            "LOG_LEVEL",
         ]
     )
