@@ -8,6 +8,8 @@ from typing import Optional
 class MemberBase(BaseModel):
     name: str = Field(None, title="Name")
 
+    name: str = Field(None, title="Name")
+
     last_name: str = Field(None, title="Last Name")
 
     second_last_name: Optional[str] = Field(None, title="Second Last Name")
