@@ -1,8 +1,6 @@
 from typing import List
 from app.business_objects.core.dao import EntityRepository
-from app.business_objects.core.dao import (
-    inject_mongodb_error_handling
-)
+from app.business_objects.core.dao import inject_mongodb_error_handling
 
 
 # =========================================================
@@ -19,18 +17,13 @@ class Users(EntityRepository):
     # CONSTRUCTOR
     # -----------------------------------------------------
     def __init__(self):
-        super().__init__(
-            collection_name='users'
-        )
+        super().__init__(collection_name="users")
 
     # -----------------------------------------------------
     # GET INDEX FIELDS
     # -----------------------------------------------------
     def get_index_fields(self) -> List[str]:
-        return [
-            'id',
-            'email'
-        ]
+        return ["id", "email"]
 
     # -----------------------------------------------------
     # GET BY USERNAME
@@ -43,6 +36,4 @@ class Users(EntityRepository):
         :param username: The username of the user
         :return: dict or None
         """
-        return self.get({
-            'username': username
-        }).pop()
+        return self.get({"username": username}).pop()

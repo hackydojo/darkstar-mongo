@@ -11,7 +11,7 @@ router = APIRouter()
 # =========================================================
 # GET MEMBER BY ID
 # =========================================================
-@router.get("/member/{member_id}", tags=['Members'])
+@router.get("/member/{member_id}", tags=["Members"])
 def get_member_by_id(member_id: UUID, members: Members = Depends(inject_members)):
     if not member_id:
         raise HTTPException(
@@ -22,7 +22,7 @@ def get_member_by_id(member_id: UUID, members: Members = Depends(inject_members)
 # =========================================================
 # LIST MEMBERS
 # =========================================================
-@router.get("/members", tags=['Members'])
+@router.get("/members", tags=["Members"])
 def list_members(members: Members = Depends(inject_members)):
     return []
 
@@ -30,10 +30,7 @@ def list_members(members: Members = Depends(inject_members)):
 # =========================================================
 # CREATE MEMBER
 # =========================================================
-@router.post(
-    "/member",
-    tags=['Members'],
-    response_model=MemberCreationRequest)
+@router.post("/member", tags=["Members"], response_model=MemberCreationRequest)
 def create_member(
     member: MemberCreationRequest, members: Members = Depends(inject_members)
 ):
@@ -43,9 +40,6 @@ def create_member(
 # =========================================================
 # UPDATE MEMBER
 # =========================================================
-@router.put(
-    "/member/{member_id}",
-    tags=['Members']
-)
+@router.put("/member/{member_id}", tags=["Members"])
 def update_member_by_id(member_id: UUID, members: Members = Depends(inject_members)):
     return None

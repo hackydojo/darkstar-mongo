@@ -16,53 +16,25 @@ def inject_users() -> Users:
 # CLASS USER
 # =========================================================
 class User(BaseModel):
+    _id: Optional[str] = Field(None, title="Internal Identifier")
 
-    _id: Optional[str] = Field(
-        None,
-        title='Internal Identifier'
-    )
+    uid: str = Field(str(uuid.uuid4()), title="Unique identifier of the user")
 
-    uid: str = Field(
-        str(uuid.uuid4()),
-        title="Unique identifier of the user"
-    )
+    phash: str = Field(None, title="Password hash")
 
-    phash: str = Field(
-        None,
-        title="Password hash"
-    )
+    salt: str = Field(None, title="Password salt")
 
-    salt: str = Field(
-        None,
-        title="Password salt"
-    )
+    name: str = Field(None, title="Name of the user")
 
-    name: str = Field(
-        None,
-        title="Name of the user"
-    )
+    last_name: str = Field(None, title="Last name of the user")
 
-    last_name: str = Field(
-        None,
-        title="Last name of the user"
-    )
-
-    email: str = Field(
-        None,
-        title="Email of the user"
-    )
+    email: str = Field(None, title="Email of the user")
 
     disabled: bool = Field(
-        True,
-        title="Weather the user is disabled or not. Disabled by default"
+        True, title="Weather the user is disabled or not. Disabled by default"
     )
 
-    claims: Optional[List[str]] = Field(
-        [
-            'authenticate'
-        ],
-        title='User claims'
-    )
+    claims: Optional[List[str]] = Field(["authenticate"], title="User claims")
 
     # -----------------------------------------------------
     # METHOD CAN
@@ -86,7 +58,7 @@ class User(BaseModel):
             sub=self.uid,
             desc=f"{self.name} {self.last_name}",
             email=self.email,
-            claims=self.claims
+            claims=self.claims,
         )
 
 
@@ -98,26 +70,11 @@ class UserSession(BaseModel):
     Represents the session of an authenticated user
     """
 
-    sub: str = Field(
-        None,
-        title='Unique identifier of the user'
-    )
-    desc: str = Field(
-        None,
-        title='First name and lastname'
-    )
-    email: str = Field(
-        None,
-        title='Email of the user'
-    )
-    claims: List[str] = Field(
-        None,
-        title='User claims'
-    )
-    exp: Optional[int] = Field(
-        None,
-        title='Expiration of the session in Unix time'
-    )
+    sub: str = Field(None, title="Unique identifier of the user")
+    desc: str = Field(None, title="First name and lastname")
+    email: str = Field(None, title="Email of the user")
+    claims: List[str] = Field(None, title="User claims")
+    exp: Optional[int] = Field(None, title="Expiration of the session in Unix time")
 
     # -----------------------------------------------------
     # METHOD CAN
@@ -131,7 +88,3 @@ class UserSession(BaseModel):
         user does not have the claim
         """
         return claim in self.claims
-
-
-
-
