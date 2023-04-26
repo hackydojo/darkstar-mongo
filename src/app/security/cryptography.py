@@ -8,8 +8,8 @@ from app.security import IdentityCredential
 class Password(IdentityCredential):
 
     """
-        Provides an abstractions on top of NaCl to provide a secure mechanism
-        to store and verify passwords using Argon2 Key Derivation Function.
+    Provides an abstractions on top of NaCl to provide a secure mechanism
+    to store and verify passwords using Argon2 Key Derivation Function.
     """
 
     # -----------------------------------------------------------------------------------
@@ -18,20 +18,15 @@ class Password(IdentityCredential):
     def __init__(self, plain_text_password, salt):
         """
 
-            :param plain_text_password:
-            :param salt:
+        :param plain_text_password:
+        :param salt:
         """
 
         self.__verify_salt_is_valid(salt=salt)
         self.__salt = salt
 
-        self.__verify_plain_text_password_is_valid(
-            password=plain_text_password
-        )
-        self.__pwd: bytes = self.__salt_password(
-            plain_text_password,
-            self.__salt
-        )
+        self.__verify_plain_text_password_is_valid(password=plain_text_password)
+        self.__pwd: bytes = self.__salt_password(plain_text_password, self.__salt)
 
         self.__hash = self.__compute_hash()
 
@@ -41,9 +36,7 @@ class Password(IdentityCredential):
     @staticmethod
     def __verify_salt_is_valid(salt: str):
         if salt is None or salt == "":
-            raise ValueError(
-                "Invalid salt provided"
-            )
+            raise ValueError("Invalid salt provided")
 
     # -----------------------------------------------------------------------------------
     # METHOD VERIFY PLAIN TEXT PASSWORD IS VALID
@@ -51,9 +44,7 @@ class Password(IdentityCredential):
     @staticmethod
     def __verify_plain_text_password_is_valid(password: str):
         if password is None or password == "":
-            raise ValueError(
-                "Invalid password provided"
-            )
+            raise ValueError("Invalid password provided")
 
     # -----------------------------------------------------------------------------------
     # METHOD COMPUTE HASH
@@ -67,11 +58,11 @@ class Password(IdentityCredential):
     @staticmethod
     def __salt_password(password: str, salt: str):
         """
-            Concatenates a given salt value at the end of the password and
-            convert the resulting string into bytes
-            :param password: the password in plain text
-            :param salt: the salt byte generated for this password
-            :return:
+        Concatenates a given salt value at the end of the password and
+        convert the resulting string into bytes
+        :param password: the password in plain text
+        :param salt: the salt byte generated for this password
+        :return:
         """
         return (password + salt).encode()
 
@@ -81,8 +72,8 @@ class Password(IdentityCredential):
     @property
     def salt(self):
         """
-            String representation of the salt bytes
-            :return: A string representation of the salt bytes encoded in UFT-8
+        String representation of the salt bytes
+        :return: A string representation of the salt bytes encoded in UFT-8
         """
         return self.__salt
 
@@ -92,8 +83,8 @@ class Password(IdentityCredential):
     @property
     def password_hash(self) -> str:
         """
-            String representation
-            :return:
+        String representation
+        :return:
         """
         return self.__hash.decode()
 
@@ -102,20 +93,17 @@ class Password(IdentityCredential):
     # -----------------------------------------------------------------------------------
     def verify(self, **kwargs):
         """
-            Requires a keyword argument called stored_hash that
-            contains the value of the stored hash from the original
-            password. This allows verifying a given password
-            without having to know the original value of the password.
+        Requires a keyword argument called stored_hash that
+        contains the value of the stored hash from the original
+        password. This allows verifying a given password
+        without having to know the original value of the password.
 
-            :param kwargs: key-word arguments as enforced by abstract class.
-            :return: True is password is valid and false if password
-            is not valid.
+        :param kwargs: key-word arguments as enforced by abstract class.
+        :return: True is password is valid and false if password
+        is not valid.
         """
         stored_hash = self.__get_stored_hash_from_arguments(kwargs).encode()
-        return nacl.pwhash.argon2id.verify(
-            stored_hash,
-            self.__pwd
-        )
+        return nacl.pwhash.argon2id.verify(stored_hash, self.__pwd)
 
     # -----------------------------------------------------------------------------------
     # METHOD GET STORED HASH FROM ARGUMENTS
@@ -123,14 +111,14 @@ class Password(IdentityCredential):
     @staticmethod
     def __get_stored_hash_from_arguments(arguments: dict) -> str:
         """
-            Checks if the required key stored_has is present in the
-            dictionary and return its value if found.
+        Checks if the required key stored_has is present in the
+        dictionary and return its value if found.
 
-            :param arguments: a dictionary that contains the key stored_hash
-            :return: the value of the key stored_hash
+        :param arguments: a dictionary that contains the key stored_hash
+        :return: the value of the key stored_hash
         """
-        if 'stored_hash' not in arguments.keys():
-            raise ValueError('stored_hash is required')
-        if not arguments['stored_hash']:
-            raise ValueError('stored_hash cannot be an empty string')
-        return arguments['stored_hash']
+        if "stored_hash" not in arguments.keys():
+            raise ValueError("stored_hash is required")
+        if not arguments["stored_hash"]:
+            raise ValueError("stored_hash cannot be an empty string")
+        return arguments["stored_hash"]
