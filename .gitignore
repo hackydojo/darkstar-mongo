@@ -120,7 +120,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+.env.cloud
 .venv
 env/
 venv/
@@ -160,4 +160,5 @@ cython_debug/
 #.idea/
 
 .env.*
-.env/
+.env.cloud/
+.env
