@@ -45,6 +45,7 @@ class ServerContext(Confite):
     # -----------------------------------------------------
     # TLS_REQUIRED
     # -----------------------------------------------------
+    @property
     def tls_required(self) -> bool:
         return self.as_int("MONGO_TLS_CONNECTION") == 1
 
@@ -54,7 +55,9 @@ class ServerContext(Confite):
     @property
     def database(self) -> database:
         if self.tls_required:
+            self.logging.debug("Opening connection to MongoDB using TLS...")
             return self.database_with_tls
+        self.logging.debug("Opening unencrypted connection to MongoDB")
         return self.database_without_tls
 
     # -----------------------------------------------------
@@ -62,7 +65,6 @@ class ServerContext(Confite):
     # -----------------------------------------------------
     @property
     def database_without_tls(self) -> database:
-        print("Connecting without database encryption...")
         return MongoClient(
             self.build_connection_string() + f"?authSource=admin{self.replica_set}"
         )[self.as_str("MONGO_DB")]
@@ -72,10 +74,6 @@ class ServerContext(Confite):
     # -----------------------------------------------------
     @property
     def database_with_tls(self) -> database:
-        print(
-            self.build_connection_string()
-            + f"?authSource=admin{self.replica_set}&tls=true"
-        )
         return MongoClient(
             self.build_connection_string()
             + f"?authSource=admin{self.replica_set}&tls=true"
