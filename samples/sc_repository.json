@@ -1,9 +1,0 @@
-{
-    "business_unit" : "sec",
-    "c_code" : "softlayer_sec",
-    "env" : "commercial",
-    "name" : "softlayer_sec_credentialed",
-    "repository_id" : 497,
-    "type" : "Credentialed",
-    "bu_id" : "SEC"
-}

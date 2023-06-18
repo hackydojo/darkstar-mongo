@@ -12,3 +12,4 @@ starlette
 pydantic
 python-dotenv
 urllib3
+redis

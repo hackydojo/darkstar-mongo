@@ -6,6 +6,7 @@ from typing import Optional
 # CLASS MEMBER BASE
 # =========================================================
 class MemberBase(BaseModel):
+    name: str = Field(None, title="Name")
 
     name: str = Field(None, title="Name")
 
@@ -22,5 +23,4 @@ class MemberBase(BaseModel):
 # CLASS MEMBER CREATION REQUEST
 # =========================================================
 class MemberCreationRequest(MemberBase):
-
     phone: str = Field(None, title="The Phone Number")
