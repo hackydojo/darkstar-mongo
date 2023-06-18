@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
-from starlette.middleware.sessions import SessionMiddleware
 from app.context import get_context
+from app.middleware.redis_session import RedisSessionMiddleware
 from app.resources.members.endpoints import router as members_router
 
 
@@ -34,7 +34,12 @@ app.add_middleware(
 
 # This is required to temporary save code and state in the session
 # during authorization with w3id
-app.add_middleware(SessionMiddleware, secret_key=get_context().middleware_key)
+app.add_middleware(
+    RedisSessionMiddleware,
+    signing_key=get_context().middleware_key,
+    cookie_name='darkstar',
+    redis=get_context().redis_connection
+)
 
 # Members Router Inclusion
 app.include_router(members_router, prefix=f"/api/{get_context().api_version}")

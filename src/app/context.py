@@ -1,6 +1,8 @@
+import redis
 from confite import Confite
 from dotenv import load_dotenv
 from pymongo import MongoClient, database
+from redis.client import Redis
 from app.logging import AbstractLogger, StandardOutputLogger
 from urllib3.exceptions import InsecureRequestWarning
 from urllib3 import disable_warnings
@@ -183,6 +185,19 @@ class ServerContext(Confite):
     def jwt_token_duration(self) -> int:
         return self.as_int("JWT_TOKEN_DURATION_IN_MINUTES")
 
+    # -----------------------------------------------------
+    # PROPERTY USE REDIS SESSION MIDDLEWARE
+    # -----------------------------------------------------
+    @property
+    def use_redis_session_middleware(self) -> bool:
+        return self.as_int(
+            "USE_REDIS_SESSION_MIDDLEWARE"
+        ) == 1
+
+    @property
+    def redis_connection(self) -> Redis:
+        return redis.from_url(self.as_str("REDIS_URL"))
+
 
 # ---------------------------------------------------------
 # METHOD GET SETTINGS
@@ -210,5 +225,8 @@ def get_context() -> ServerContext:
             "JWT_SECRET_KEY",
             "JWT_SIGN_ALGORITHM",
             "JWT_TOKEN_DURATION_IN_MINUTES",
+            "USE_REDIS_SESSION_MIDDLEWARE",
+            "REDIS_URL"
+
         ]
     )
