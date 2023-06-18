@@ -37,8 +37,8 @@ app.add_middleware(
 app.add_middleware(
     RedisSessionMiddleware,
     signing_key=get_context().middleware_key,
-    cookie_name='darkstar',
-    redis=get_context().redis_connection
+    cookie_name="darkstar",
+    redis=get_context().redis_connection,
 )
 
 

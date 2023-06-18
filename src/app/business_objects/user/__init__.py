@@ -16,44 +16,22 @@ def inject_users() -> Users:
 # CLASS USER
 # =========================================================
 class User(BaseModel):
-    _id: Optional[str] = Field(
-        None,
-        title="Internal Identifier"
-    )
+    _id: Optional[str] = Field(None, title="Internal Identifier")
 
-    uid: str = Field(
-        str(uuid.uuid4()),
-        title="Unique identifier of the user"
-    )
+    uid: str = Field(str(uuid.uuid4()), title="Unique identifier of the user")
 
-    phash: str = Field(
-        None,
-        title="Password hash"
-    )
+    phash: str = Field(None, title="Password hash")
 
-    salt: str = Field(
-        None,
-        title="Password salt"
-    )
+    salt: str = Field(None, title="Password salt")
 
-    name: str = Field(
-        None,
-        title="Name of the user"
-    )
+    name: str = Field(None, title="Name of the user")
 
-    last_name: str = Field(
-        None,
-        title="Last name of the user"
-    )
+    last_name: str = Field(None, title="Last name of the user")
 
-    email: str = Field(
-        None,
-        title="Email of the user"
-    )
+    email: str = Field(None, title="Email of the user")
 
     disabled: bool = Field(
-        True,
-        title="Weather the user is disabled or not. Disabled by default"
+        True, title="Weather the user is disabled or not. Disabled by default"
     )
 
     claims: Optional[List[str]] = Field(["authenticate"], title="User claims")

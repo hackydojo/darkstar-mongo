@@ -35,10 +35,7 @@ class InternalTokenExpirationProvider(TokenExpirationProvider):
     # -----------------------------------------------------
     # CONSTRUCTOR METHOD
     # -----------------------------------------------------
-    def __init__(
-            self,
-            server_context: ServerContext = get_context()
-    ):
+    def __init__(self, server_context: ServerContext = get_context()):
         """
         Creates instances of al internal token expiration
         provider
@@ -170,11 +167,8 @@ class UserAuthentication:
     @property
     def jwt_access_token(self) -> str:
         if self.is_valid:
-            to_encode: dict = \
-                self.__serialize_session_to_dict()
-            to_encode["exp"] = self.\
-                token_expiration_provider.\
-                get_expiration_time()
+            to_encode: dict = self.__serialize_session_to_dict()
+            to_encode["exp"] = self.token_expiration_provider.get_expiration_time()
             return jwt.encode(
                 claims=to_encode,
                 key=self.context.jwt_key,
@@ -198,8 +192,7 @@ def get_credentials_exception() -> HTTPException:
 # FUNCTION GETY CURRENT USER
 # ---------------------------------------------------------
 async def get_user_session(
-    token: str = Depends(oauth2_schema),
-        context: ServerContext = Depends(get_context)
+    token: str = Depends(oauth2_schema), context: ServerContext = Depends(get_context)
 ) -> UserSession:
     """
     Given a valid JWT access token, this functions decodes
@@ -212,11 +205,7 @@ async def get_user_session(
     """
     try:
         payload = jwt.decode(
-            token=token,
-            key=context.jwt_key,
-            algorithms=[
-                context.jwt_signing_algorithm
-            ]
+            token=token, key=context.jwt_key, algorithms=[context.jwt_signing_algorithm]
         )
         key_id: str = payload.get("sub")
         if key_id is None:
@@ -227,7 +216,5 @@ async def get_user_session(
     session: UserSession = UserSession(**payload)
     if session is None:
         raise get_credentials_exception()
-    context.logging.debug(
-        f"User: {session.dict()} successfully authenticated"
-    )
+    context.logging.debug(f"User: {session.dict()} successfully authenticated")
     return session

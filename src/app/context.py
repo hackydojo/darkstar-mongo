@@ -190,9 +190,7 @@ class ServerContext(Confite):
     # -----------------------------------------------------
     @property
     def use_redis_session_middleware(self) -> bool:
-        return self.as_int(
-            "USE_REDIS_SESSION_MIDDLEWARE"
-        ) == 1
+        return self.as_int("USE_REDIS_SESSION_MIDDLEWARE") == 1
 
     @property
     def redis_connection(self) -> Redis:
@@ -226,7 +224,6 @@ def get_context() -> ServerContext:
             "JWT_SIGN_ALGORITHM",
             "JWT_TOKEN_DURATION_IN_MINUTES",
             "USE_REDIS_SESSION_MIDDLEWARE",
-            "REDIS_URL"
-
+            "REDIS_URL",
         ]
     )
