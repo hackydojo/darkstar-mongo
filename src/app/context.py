@@ -197,7 +197,6 @@ class ServerContext(Confite):
         return redis.from_url(self.as_str("REDIS_URL"))
 
 
-
 # ---------------------------------------------------------
 # METHOD GET SETTINGS
 # ---------------------------------------------------------
@@ -226,6 +225,5 @@ def get_context() -> ServerContext:
             "JWT_TOKEN_DURATION_IN_MINUTES",
             "USE_REDIS_SESSION_MIDDLEWARE",
             "REDIS_URL",
-
         ]
     )
